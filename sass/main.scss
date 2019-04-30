@@ -1,0 +1,430 @@
+%default_settings_block {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+%display {
+	position: relative;
+	perspective: 1000px; //как бы глубина для карточки
+}
+
+%back_cover {
+	background-size: cover;
+}
+
+%size_skill_job {
+	max-width: 750px;
+  min-width: 300px;
+}
+
+$white: #fff;
+$black: #000;
+$font_size: 16px;
+
+*	{
+	padding: 0;
+	margin: 0;
+	outline: none;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: $font_size;
+}
+
+body {
+	font-size: $font_size;
+	font-family: 'Roboto', sans-serif;
+	background-color: $black;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* блок обо мне */
+.about {
+	padding: 0 10px;
+  @extend %default_settings_block;
+
+	&__background {
+		position: absolute;
+		z-index: -1;
+		width: 110%;
+		height: 110%;
+	}
+
+	&__content {
+		max-width: 750px;
+    min-width: 300px;
+    width: 80%;
+		margin: 0 auto;
+
+		&-name {
+			margin: 1.25rem auto;
+			font-size: 3rem;
+			color: #e74582;
+			font-weight: 500;
+		}
+
+		&-desc {
+			margin: 0.625rem auto;
+			font-size: 1.5rem;
+			color: $white;
+		}
+
+		@media (max-width: 480px) {
+
+		}
+	}
+}
+
+.description {
+	@extend %default_settings_block;
+	justify-content: space-between;
+	background-color: #e74582;
+}
+
+/* навыки */
+.skills {
+	@extend %size_skill_job;
+  margin: 0.625rem 0.625rem 0.625rem 1.875rem;
+
+	&__title {
+    margin: 1rem 0;
+		font-size: 2rem;
+		color: $white;
+	}
+
+	&__list {	
+		color: #000;
+	}
+}
+
+/* место работы */
+.job {
+	@extend %size_skill_job;
+  margin: 0.625rem 1.875rem 0.625rem 0.625rem;
+  text-align: right;
+
+	&__title {
+		margin: 1rem 0;
+		font-size: 2rem;
+		color: $white;
+	}
+
+	&__desc {
+		font-size: 1.25rem;
+		color: transparentize($white, 0.5);
+	}
+}
+
+.list {
+	font-size: 1.125rem;
+
+	&__item {
+		margin: 0.625rem 0;
+	}
+}
+
+/* соц.сети */
+.social_wrap {
+	position: absolute;
+	bottom: 10%;
+	width: 100%;
+	text-align: center;
+
+	li {
+		display: inline-block;
+		font-size: 25px;
+		margin: 0 10px;
+	}
+
+	a {	
+		padding: 0 10px;
+	}
+
+	i {
+		color: #fdd46b;
+	}
+
+	a:hover i {
+  	color: $white;
+	}
+}
+
+/* проекты */
+.projects {
+	height: 100vh;
+	background-color: $black;
+
+	&__wrap {
+		display: grid;
+  	grid-template-rows: 100px 100px 100px 100px;
+
+    position: relative;
+  	top: 50%;
+    transform: translateY(-50%);
+
+  	grid-template-areas: "a a a b b b d d d"
+				    						 "a a a c c c d d d"
+				    						 "a a a c c c e e e"
+				    						 "f f f c c c e e e";
+
+	}
+
+	&__item {
+		margin: 10px 10px;
+		// border: 1px solid red;
+	}
+	
+	.item {
+		&__1 {
+			grid-area: a;
+		}
+
+		&__2 {
+			grid-area: b;
+		}
+
+		&__3 {
+			grid-area: d;
+		}
+
+		&__4 {
+			grid-area: f;
+		}
+
+		&__5 {
+			grid-area: c;
+		}
+
+		&__6 {
+			grid-area: e;
+		}
+
+		@for $i from 1 through 6 {
+			&__#{$i} {
+				@extend %display;
+			}
+		}
+	}
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  backface-visibility: hidden; //для скрытия тыльной стороны карточки
+  border-radius: 10px;
+  text-align: center;
+}
+.front {
+  background-color: transparent;
+  box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
+}
+.back {
+  background-color: #FFA000;
+  transform: rotateY(180deg); //разворот карточки по оси на 180.
+  overflow: hidden;
+
+  img {
+  	width: 100%;
+    top: -1px;
+    position: absolute;
+  }
+}
+
+@for $i from 1 through 6 {
+	.item {
+		&__#{$i}:hover .front {
+			transform: rotateY(180deg);
+		}
+
+		&_#{$i}:hover .back {
+			transform: rotateY(360deg) scale(1.1);
+		}
+	}
+}
+
+/*слайдер*/
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+
+  &:last-child {
+  	margin-top: 2vh;
+  }
+
+  &__title {
+  	padding: 0 10px;
+    color: $white;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-shadow: 0 0 10px #fff;
+    z-index: 1;
+  }
+}
+
+.item {
+	margin: 0 5px;
+  height: 49vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 25%;
+  text-align: center;
+  transition: all 0.6s;
+	
+	&:last-child {
+		margin-right: 0;
+	}
+
+	&:first-child {
+		margin-left: 0;
+	}
+
+  &:before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $black;
+    opacity: 0.65;
+  }
+
+  &:hover {
+  	flex-basis: 70%;
+
+  	&:before {
+  		opacity: 0;
+  	}
+
+		.slider__title {
+			z-index: -1;
+		}
+  }
+}
+
+.item {
+	@each $name, $i in 
+				(cat, 3), (dart-service, 2), (trendfox, 1),
+				(tem-portfolio, 4), (email_1, 5), (quack, 6), 
+				(scrin-counsel, 7), (grid-site, 8) 
+	{
+		&-#{$i} {
+			position: relative;
+    	background-image: url('../img/#{$name}.png');
+    	background-size: cover;
+  	}
+	}
+}
+
+@media (max-width: 800px) {
+	.slider {
+		flex-wrap: wrap;
+	}
+
+	.item {
+		flex-basis: 40%;
+	
+		&:hover {
+			flex-basis: 55%;
+		}
+	}
+}
+
+@media (max-width: 640px) {
+  .slider {
+    flex-flow: column; /*переворот оси*/
+    height: 100vh;
+  }
+
+  .item {
+    width: 100%;
+
+    &:hover {
+    	flex-grow: 30%;
+    	flex-basis: 80%;
+    }
+  }
+}
+/*конец слайдера*/
+
+@media (max-width: 700px) {
+	.description {
+		flex-direction: column;
+		justify-content: space-around;
+	}
+
+	.job, .skills {
+		width: 90%;
+	}
+
+	.social_wrap {
+		position: static;
+		margin-bottom: 26px;
+
+		li {
+			font-size: 20px;
+		}
+	}
+}
+
+@media (max-width: 640px) {
+	html {
+		font-size: $font_size - 2;
+	}
+}
+
+@media (max-width: 480px) {
+	html {
+		font-size: $font_size - 3;
+	}
+	
+	.about__content-name {
+		font-size: 2rem;
+	}
+	.about__content-desc {
+		font-size: 1.23rem;
+    line-height: 1.5rem;
+	}
+}
+
+@media (max-width: 340px) {
+	.about__content {
+		padding: 0 10px;
+	}
+}
+
+@media (max-height: 500px) and (max-width: 1100px) {
+	.social_wrap {
+		bottom: 8%;
+	}
+}
+
+@media (max-height: 560px) and (max-width: 700px) {
+	.description {
+		height: 100%;
+		padding: 10px 0;
+	}
+
+	.social_wrap {
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+}
