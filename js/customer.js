@@ -1,13 +1,13 @@
 !function() {
-    $('.about').on('mousemove', (e) => {
-        const x = e.pageX / $(window).width();
-        const y = e.pageY / $(window).height();
+	$('.about').on('mousemove', (e) => {
+		const x = e.pageX / $(window).width();
+		const y = e.pageY / $(window).height();
 
-        if ($(window).width() > 550) {
-            $('.about__content').css(
-                'transform',
-                'translate(-' + x * 60 + 'px, -' + y * 60 + 'px)'
-            );
-        }
-    });
+		if ($(window).width() > 550) {
+			$('.about__content').css(
+				'transform',
+				'translate(-' + x * 60 + 'px, -' + y * 60 + 'px)'
+			);
+		}
+	});
 }();
